@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Parfumy — Luxury in Every Drop</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+	<link rel="icon" href="./Parfumy logo.png" />
+	<link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body>
+	<header class="site-header">
+		<div class="container header-inner">
+			<div class="brand">
+				<img src="./Parfumy logo.png" alt="Parfumy logo" class="brand-logo" />
+				<span class="brand-name">Parfumy</span>
+			</div>
+			<nav class="nav">
+				<a href="#about" class="nav-link">About</a>
+				<a href="#featured" class="nav-link">Perfumes</a>
+				<a href="#testimonials" class="nav-link">Reviews</a>
+				<a href="#contact" class="nav-link btn btn-outline">Contact</a>
+			</nav>
+			<button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+		</div>
+	</header>
+
+	<main>
+		<section class="hero" id="home">
+			<div class="container hero-inner">
+				<div class="hero-copy">
+					<h1 class="hero-title">Luxury in Every Drop</h1>
+					<p class="hero-subtitle">Elevate your presence with signature scents crafted for timeless elegance.</p>
+					<div class="hero-ctas">
+						<a href="#featured" class="btn btn-primary js-scroll">Shop Now</a>
+						<a href="https://wa.me/254713400220" target="_blank" rel="noopener" class="btn btn-secondary">Order on WhatsApp</a>
+						<a href="#about" class="btn btn-ghost js-scroll">Discover More</a>
+					</div>
+				</div>
+				<div class="hero-media">
+					<img src="./assets/img/hero-perfume.jpeg" alt="Perfume bottle" class="hero-image" />
+				</div>
+			</div>
+		</section>
+
+		<section class="about split-bg reveal" id="about">
+			<div class="container about-inner">
+				<div class="about-copy">
+					<h2 class="section-title">About Parfumy</h2>
+					<p>Parfumy blends artistry and innovation to craft luxurious fragrances that whisper sophistication. Each bottle is a composition of rare ingredients, carefully layered to create an unforgettable signature.</p>
+				</div>
+				<div class="about-highlight card">
+					<p class="stat">Fine Ingredients • Handcrafted • Cruelty‑Free</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="featured reveal" id="featured">
+			<div class="container">
+				<h2 class="section-title center">Featured Perfumes</h2>
+				<div class="product-grid">
+					<article class="product-card" data-product='{"title":"Noir Essence","price":"Ksh. 1020","desc":"Dark vanilla with smoky oud and amber."}'>
+						<div class="product-media">
+							<img src="./assets/img/product-1.jpeg" alt="Noir Essence" />
+						</div>
+						<div class="product-body">
+							<h3 class="product-title">Noir Essence</h3>
+							<p class="product-desc">Dark vanilla with smoky oud and amber.</p>
+							<div class="product-actions">
+								<button class="btn btn-primary js-order">Order Now</button>
+								<button class="btn btn-ghost js-details">View Details</button>
+							</div>
+						</div>
+					</article>
+
+					<article class="product-card" data-product='{"title":"Azure Bloom","price":"KES 2500","desc":"Fresh bergamot with jasmine and white musk."}'>
+						<div class="product-media">
+							<img src="./assets/img/product-2.jpeg" alt="Azure Bloom" />
+						</div>
+						<div class="product-body">
+							<h3 class="product-title">Azure Bloom</h3>
+							<p class="product-desc">Fresh bergamot with jasmine and white musk.</p>
+							<div class="product-actions">
+								<button class="btn btn-primary js-order">Order Now</button>
+								<button class="btn btn-ghost js-details">View Details</button>
+							</div>
+						</div>
+					</article>
+
+					<article class="product-card" data-product='{"title":"Gold Veil","price":"KES 1500","desc":"Saffron, rose, and warm cedarwood."}'>
+						<div class="product-media">
+							<img src="./assets/img/product-3.jpeg" alt="Gold Veil" />
+						</div>
+						<div class="product-body">
+							<h3 class="product-title">Gold Veil</h3>
+							<p class="product-desc">Saffron, rose, and warm cedarwood.</p>
+							<div class="product-actions">
+								<button class="btn btn-primary js-order">Order Now</button>
+								<button class="btn btn-ghost js-details">View Details</button>
+							</div>
+						</div>
+					</article>
+
+					<article class="product-card" data-product='{"title":"Ivory Whisper","price":"KES 3500","desc":"Powdery iris with creamy sandalwood."}'>
+						<div class="product-media">
+							<img src="./assets/img/product-4.jpeg" alt="Ivory Whisper" />
+						</div>
+						<div class="product-body">
+							<h3 class="product-title">Ivory Whisper</h3>
+							<p class="product-desc">Powdery iris with creamy sandalwood.</p>
+							<div class="product-actions">
+								<button class="btn btn-primary js-order">Order Now</button>
+								<button class="btn btn-ghost js-details">View Details</button>
+							</div>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<section class="testimonials reveal" id="testimonials">
+			<div class="container">
+				<h2 class="section-title center">What Our Clients Say</h2>
+				<div class="slider" aria-roledescription="carousel">
+					<div class="slides">
+						<figure class="testimonial">
+							<blockquote>
+								“Parfumy elevates my everyday. The scent lasts and feels exclusive.”
+							</blockquote>
+							<figcaption>— James Kibet</figcaption>
+						</figure>
+						<figure class="testimonial">
+							<blockquote>
+								“Elegant and modern. I receive compliments everywhere I go.”
+							</blockquote>
+							<figcaption>— Emma Kitheka</figcaption>
+						</figure>
+						<figure class="testimonial">
+							<blockquote>
+								“Beautiful packaging and even better fragrance. Truly luxurious.”
+							</blockquote>
+							<figcaption>— Barry Okoth.</figcaption>
+						</figure>
+					</div>
+					<div class="slider-controls">
+						<button class="btn btn-ghost prev" aria-label="Previous">‹</button>
+						<button class="btn btn-ghost next" aria-label="Next">›</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="contact reveal" id="contact">
+			<div class="container">
+				<h2 class="section-title center">Get in Touch</h2>
+				<div class="contact-actions">
+					<a href="tel:+254713400220" class="action chip">Call</a>
+					<a href="https://wa.me/254713400220" target="_blank" rel="noopener" class="action chip">WhatsApp</a>
+					<a href="https://instagram.com/" target="_blank" rel="noopener" class="action chip">Instagram</a>
+				</div>
+
+				<form class="contact-form" novalidate>
+					<div class="form-row">
+						<label for="name">Name</label>
+						<input id="name" name="name" type="text" placeholder="Your name" required />
+						<small class="error" data-for="name"></small>
+					</div>
+					<div class="form-row">
+						<label for="email">Email</label>
+						<input id="email" name="email" type="email" placeholder="you@example.com" required />
+						<small class="error" data-for="email"></small>
+					</div>
+					<div class="form-row">
+						<label for="message">Message</label>
+						<textarea id="message" name="message" rows="4" placeholder="How can we help?" required></textarea>
+						<small class="error" data-for="message"></small>
+					</div>
+					<button class="btn btn-primary" type="submit">Send Message</button>
+					<p class="form-status" role="status" aria-live="polite"></p>
+				</form>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="container">
+			<p>© <span id="year"></span> Captain. All rights reserved.</p>
+		</div>
+	</footer>
+
+	<!-- Modal -->
+	<div class="modal" id="product-modal" aria-hidden="true" role="dialog" aria-modal="true">
+		<div class="modal-backdrop" data-close></div>
+		<div class="modal-dialog" role="document">
+			<button class="modal-close" aria-label="Close" data-close>×</button>
+			<div class="modal-content">
+				<h3 class="modal-title">Title</h3>
+				<p class="modal-desc">Description</p>
+				<p class="modal-price"></p>
+				<div class="modal-actions">
+					<a href="https://wa.me/254713400220" target="_blank" rel="noopener" class="btn btn-primary">Order on WhatsApp</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="./assets/js/main.js" defer></script>
+</body>
+</html>
+
