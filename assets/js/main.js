@@ -6,6 +6,15 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 document.addEventListener('DOMContentLoaded', () => {
 	const yearEl = $('#year');
 	if (yearEl) yearEl.textContent = new Date().getFullYear();
+	// Adjust body padding based on header height
+	const adjustOffset = () => {
+		const header = $('.site-header');
+		if (!header) return;
+		const h = header.getBoundingClientRect().height;
+		document.body.style.paddingTop = `${Math.ceil(h)}px`;
+	};
+	adjustOffset();
+	window.addEventListener('resize', adjustOffset);
 });
 
 // Mobile nav toggle
@@ -159,6 +168,48 @@ document.addEventListener('DOMContentLoaded', () => {
 			Object.keys(errors).forEach(k => setError(k));
 		}, 400);
 	});
+})();
+
+// Search and category filtering
+(() => {
+    const searchInput = $('#product-search');
+    const productGrid = $('.product-grid');
+    if (!productGrid) return;
+    const cards = $$('.product-card', productGrid);
+    const categoryLinks = $$('.category-link');
+
+    let currentCategory = 'all';
+    let currentQuery = '';
+
+    const matches = (card) => {
+        const category = (card.getAttribute('data-category') || '').toLowerCase();
+        const text = `${$('.product-title', card)?.textContent || ''} ${$('.product-desc', card)?.textContent || ''}`.toLowerCase();
+        const categoryOk = currentCategory === 'all' || category === currentCategory;
+        const queryOk = !currentQuery || text.includes(currentQuery);
+        return categoryOk && queryOk;
+    };
+
+    const applyFilter = () => {
+        cards.forEach(card => {
+            card.style.display = matches(card) ? '' : 'none';
+        });
+    };
+
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            currentQuery = searchInput.value.trim().toLowerCase();
+            applyFilter();
+        });
+    }
+
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            categoryLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            currentCategory = (link.getAttribute('data-category') || 'all').toLowerCase();
+            applyFilter();
+        });
+    });
 })();
 
 

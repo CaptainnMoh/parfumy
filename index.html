@@ -14,7 +14,7 @@
 	<header class="site-header">
 		<div class="container header-inner">
 			<div class="brand">
-				<img src="./Parfumy logo.png" alt="Parfumy logo" class="brand-logo" />
+				<img src="./Parfumy logo.jpeg" alt="Parfumy logo" class="brand-logo" />
 				<span class="brand-name">Parfumy</span>
 			</div>
 			<nav class="nav">
@@ -24,6 +24,21 @@
 				<a href="#contact" class="nav-link btn btn-outline">Contact</a>
 			</nav>
 			<button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+		</div>
+		<div class="container header-utility">
+			<form class="search" role="search" aria-label="Search products" onsubmit="return false;">
+				<input type="search" id="product-search" placeholder="Search perfumes..." aria-label="Search perfumes" />
+			</form>
+			<nav class="category-nav" aria-label="Categories">
+				<button class="category-link active" data-category="all" type="button">All</button>
+				<button class="category-link" data-category="men" type="button">Men</button>
+				<button class="category-link" data-category="women" type="button">Women</button>
+				<button class="category-link" data-category="unisex" type="button">Unisex</button>
+				<button class="category-link" data-category="niche" type="button">Niche</button>
+				<button class="category-link" data-category="kids" type="button">Kids</button>
+				<button class="category-link" data-category="gift-sets" type="button">Gift Sets</button>
+				<button class="category-link" data-category="gift-cards" type="button">Gift Cards</button>
+			</nav>
 		</div>
 	</header>
 
@@ -63,7 +78,7 @@
 			<div class="container">
 				<h2 class="section-title center">Featured Perfumes</h2>
 				<div class="product-grid">
-					<article class="product-card" data-product='{"title":"Noir Essence","price":"Ksh. 1020","desc":"Dark vanilla with smoky oud and amber."}'>
+					<article class="product-card" data-category="men" data-product='{"title":"Noir Essence","price":"Ksh. 1020","desc":"Dark vanilla with smoky oud and amber."}'>
 						<div class="product-media">
 							<img src="./assets/img/product-1.jpeg" alt="Noir Essence" />
 						</div>
@@ -77,7 +92,7 @@
 						</div>
 					</article>
 
-					<article class="product-card" data-product='{"title":"Azure Bloom","price":"KES 2500","desc":"Fresh bergamot with jasmine and white musk."}'>
+					<article class="product-card" data-category="women" data-product='{"title":"Azure Bloom","price":"KES 2500","desc":"Fresh bergamot with jasmine and white musk."}'>
 						<div class="product-media">
 							<img src="./assets/img/product-2.jpeg" alt="Azure Bloom" />
 						</div>
@@ -91,7 +106,7 @@
 						</div>
 					</article>
 
-					<article class="product-card" data-product='{"title":"Gold Veil","price":"KES 1500","desc":"Saffron, rose, and warm cedarwood."}'>
+					<article class="product-card" data-category="unisex" data-product='{"title":"Gold Veil","price":"KES 1500","desc":"Saffron, rose, and warm cedarwood."}'>
 						<div class="product-media">
 							<img src="./assets/img/product-3.jpeg" alt="Gold Veil" />
 						</div>
@@ -105,7 +120,7 @@
 						</div>
 					</article>
 
-					<article class="product-card" data-product='{"title":"Ivory Whisper","price":"KES 3500","desc":"Powdery iris with creamy sandalwood."}'>
+					<article class="product-card" data-category="gift-sets" data-product='{"title":"Ivory Whisper","price":"KES 3500","desc":"Powdery iris with creamy sandalwood."}'>
 						<div class="product-media">
 							<img src="./assets/img/product-4.jpeg" alt="Ivory Whisper" />
 						</div>
