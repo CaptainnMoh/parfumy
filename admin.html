@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Parfumy Admin</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body>
+	<header class="site-header">
+		<div class="container header-inner">
+			<div class="brand">
+				<img src="./Parfumy logo.jpeg" alt="Parfumy logo" class="brand-logo" />
+				<span class="brand-name">Parfumy Admin</span>
+			</div>
+			<nav class="nav">
+				<a href="./index.html" class="nav-link">View Site</a>
+				<button id="logout-btn" class="nav-link btn btn-outline" style="display:none" type="button">Log Out</button>
+			</nav>
+			<button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+		</div>
+	</header>
+
+	<main class="admin-main">
+		<div class="container">
+			<section class="auth-section reveal" id="auth">
+				<div class="card admin-card">
+					<h2 class="section-title">Admin Login</h2>
+					<form id="login-form" class="contact-form" novalidate>
+						<div class="form-row">
+							<label for="username">Username</label>
+							<input id="username" type="text" placeholder="admin" autocomplete="username" required />
+							<small class="error" data-for="username"></small>
+						</div>
+						<div class="form-row">
+							<label for="password">Password</label>
+							<input id="password" type="password" placeholder="••••••••" autocomplete="current-password" required />
+							<small class="error" data-for="password"></small>
+						</div>
+						<button class="btn btn-primary" type="submit">Login</button>
+						<p class="form-status" id="login-status" role="status" aria-live="polite"></p>
+					</form>
+				</div>
+			</section>
+
+			<section class="dashboard-section reveal" id="dashboard" hidden>
+				<div class="admin-layout">
+					<aside class="admin-sidebar">
+						<button class="sidebar-link active" data-target="panel-add" type="button">Add New Perfume</button>
+						<button class="sidebar-link" data-target="panel-view" type="button">View All Perfumes</button>
+						<button class="sidebar-link" data-target="panel-categories" type="button">Manage Categories</button>
+						<button class="sidebar-link" data-target="panel-users" type="button">Manage Users</button>
+					</aside>
+					<section class="admin-content">
+						<div id="panel-add" class="admin-panel">
+							<div class="card admin-card">
+								<h2 class="section-title">Add New Perfume</h2>
+								<form id="product-form" class="contact-form" novalidate>
+									<div class="form-row">
+										<label for="p-title">Name</label>
+										<input id="p-title" type="text" placeholder="Perfume name" required />
+										<small class="error" data-for="p-title"></small>
+									</div>
+									<div class="form-row">
+										<label for="p-desc">Description</label>
+										<textarea id="p-desc" rows="3" placeholder="Short description" required></textarea>
+										<small class="error" data-for="p-desc"></small>
+									</div>
+									<div class="form-row">
+										<label for="p-price">Price (optional)</label>
+										<input id="p-price" type="text" placeholder="e.g., $129 or KES 2500" />
+									</div>
+									<div class="form-row">
+										<label for="p-category">Category</label>
+										<select id="p-category" required></select>
+										<small class="error" data-for="p-category"></small>
+									</div>
+									<div class="form-row">
+										<label for="p-image">Image</label>
+										<input id="p-image" type="file" accept="image/*" required />
+										<small class="error" data-for="p-image"></small>
+									</div>
+									<button class="btn btn-primary" type="submit">Add Perfume</button>
+									<p class="form-status" id="product-status" role="status" aria-live="polite"></p>
+								</form>
+							</div>
+						</div>
+
+						<div id="panel-view" class="admin-panel" hidden>
+							<div class="card admin-card">
+								<h2 class="section-title">All Perfumes</h2>
+								<div id="admin-product-list" class="product-grid"></div>
+							</div>
+						</div>
+
+						<div id="panel-categories" class="admin-panel" hidden>
+							<div class="card admin-card">
+								<h2 class="section-title">Manage Categories</h2>
+								<form id="category-form" class="contact-form" novalidate>
+									<div class="form-row">
+										<label for="cat-name">New Category</label>
+										<input id="cat-name" type="text" placeholder="e.g., Niche" />
+									</div>
+									<button class="btn btn-primary" type="submit">Add Category</button>
+									<p class="form-status" id="category-status"></p>
+								</form>
+								<ul id="category-list" class="admin-list"></ul>
+							</div>
+						</div>
+
+						<div id="panel-users" class="admin-panel" hidden>
+							<div class="card admin-card">
+								<h2 class="section-title">Manage Users</h2>
+								<form id="user-form" class="contact-form" novalidate>
+									<div class="form-row">
+										<label for="new-username">Username</label>
+										<input id="new-username" type="text" placeholder="admin" />
+									</div>
+									<div class="form-row">
+										<label for="new-password">New Password</label>
+										<input id="new-password" type="password" placeholder="New password" />
+									</div>
+									<button class="btn btn-primary" type="submit">Update Credentials</button>
+									<p class="form-status" id="user-status"></p>
+								</form>
+
+								<div class="divider" style="height:12px"></div>
+
+								<div class="card admin-card">
+									<h3 class="section-title">Users</h3>
+									<form id="user-add-form" class="contact-form" novalidate>
+										<div class="form-row">
+											<label for="add-username">New Username</label>
+											<input id="add-username" type="text" placeholder="username" />
+										</div>
+										<div class="form-row">
+											<label for="add-password">Password</label>
+											<input id="add-password" type="password" placeholder="password" />
+										</div>
+										<button class="btn btn-primary" type="submit">Add User</button>
+										<p class="form-status" id="user-add-status"></p>
+									</form>
+									<ul id="users-list" class="admin-list"></ul>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</section>
+		</div>
+	</main>
+
+	<script src="./assets/js/admin.js" defer></script>
+</body>
+</html>

@@ -170,46 +170,176 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 })();
 
-// Search and category filtering
+// Search and dynamic categories/products
 (() => {
-    const searchInput = $('#product-search');
-    const productGrid = $('.product-grid');
-    if (!productGrid) return;
-    const cards = $$('.product-card', productGrid);
-    const categoryLinks = $$('.category-link');
+	const searchInput = $('#product-search');
+	const productGrid = $('.product-grid');
+	const categoryNav = $('.category-nav');
+	if (!productGrid || !categoryNav) return;
 
-    let currentCategory = 'all';
-    let currentQuery = '';
+	const getProducts = () => { try { return JSON.parse(localStorage.getItem('parfumy_products') || '[]'); } catch { return []; } };
+	const getCategories = () => { try { return JSON.parse(localStorage.getItem('parfumy_categories') || '[]'); } catch { return []; } };
 
-    const matches = (card) => {
-        const category = (card.getAttribute('data-category') || '').toLowerCase();
-        const text = `${$('.product-title', card)?.textContent || ''} ${$('.product-desc', card)?.textContent || ''}`.toLowerCase();
-        const categoryOk = currentCategory === 'all' || category === currentCategory;
-        const queryOk = !currentQuery || text.includes(currentQuery);
-        return categoryOk && queryOk;
-    };
+	let currentCategory = 'all';
+	let currentQuery = '';
+	let cards = $$('.product-card', productGrid);
 
-    const applyFilter = () => {
-        cards.forEach(card => {
-            card.style.display = matches(card) ? '' : 'none';
-        });
-    };
+	const renderCategoryNav = () => {
+		const cats = getCategories();
+		const catsWithAll = ['all', ...cats];
+		const prev = currentCategory;
+		categoryNav.innerHTML = '';
+		const fragment = document.createDocumentFragment();
+		catsWithAll.forEach((c, i) => {
+			const btn = document.createElement('button');
+			btn.className = 'category-link';
+			btn.type = 'button';
+			btn.setAttribute('data-category', c.toLowerCase());
+			btn.textContent = c === 'all' ? 'All' : c.replace('-', ' ');
+			fragment.appendChild(btn);
+		});
+		categoryNav.appendChild(fragment);
+		// restore previous selection if still valid; else default to 'all'
+		const validCats = new Set(catsWithAll.map(c => c.toLowerCase()));
+		currentCategory = validCats.has((prev || '').toLowerCase()) ? prev.toLowerCase() : 'all';
+		bindCategoryClicks();
+		// mark active
+		$$('.category-link', categoryNav).forEach(l => l.classList.toggle('active', l.getAttribute('data-category') === currentCategory));
+	};
 
-    if (searchInput) {
-        searchInput.addEventListener('input', () => {
-            currentQuery = searchInput.value.trim().toLowerCase();
-            applyFilter();
-        });
-    }
+	const bindCategoryClicks = () => {
+		const links = $$('.category-link', categoryNav);
+		links.forEach(link => {
+			link.addEventListener('click', () => {
+				links.forEach(l => l.classList.remove('active'));
+				link.classList.add('active');
+				currentCategory = (link.getAttribute('data-category') || '').toLowerCase();
+				applyFilter();
+			});
+		});
+	};
 
-    categoryLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            categoryLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-            currentCategory = (link.getAttribute('data-category') || 'all').toLowerCase();
-            applyFilter();
-        });
-    });
+	const matches = (card) => {
+		const cats = getCategories().map(c => c.toLowerCase());
+		const category = (card.getAttribute('data-category') || '').toLowerCase();
+		if (!cats.includes(category)) return false; // hide if category removed
+		if (currentCategory !== 'all' && currentCategory && category !== currentCategory) return false;
+		const text = `${$('.product-title', card)?.textContent || ''} ${$('.product-desc', card)?.textContent || ''}`.toLowerCase();
+		if (currentQuery && !text.includes(currentQuery)) return false;
+		return true;
+	};
+
+	const applyFilter = () => {
+		cards.forEach(card => {
+			card.style.display = matches(card) ? '' : 'none';
+		});
+		const anyVisible = cards.some(card => card.style.display !== 'none');
+		const emptyEl = document.getElementById('grid-empty');
+		if (emptyEl) emptyEl.classList.toggle('show', !anyVisible);
+	};
+
+	const bindOrderAndDetails = () => {
+		// Wire up Details for dynamically added cards
+		$$('.js-details').forEach(btn => {
+			if (btn.dataset.bound === '1') return;
+			btn.dataset.bound = '1';
+			btn.addEventListener('click', () => {
+				const card = btn.closest('.product-card');
+				const modal = document.getElementById('product-modal');
+				if (!card || !modal) return;
+				const data = card.getAttribute('data-product') || '{}';
+				let p = {};
+				try { p = JSON.parse(data); } catch {}
+				const titleEl = modal.querySelector('.modal-title');
+				const descEl = modal.querySelector('.modal-desc');
+				const priceEl = modal.querySelector('.modal-price');
+				if (titleEl) titleEl.textContent = p.title || 'Perfume';
+				if (descEl) descEl.textContent = p.desc || '';
+				if (priceEl) priceEl.textContent = p.price ? `Price: ${p.price}` : '';
+				modal.classList.add('show');
+				modal.setAttribute('aria-hidden', 'false');
+				document.body.style.overflow = 'hidden';
+			});
+		});
+		$$('.js-order').forEach(btn => {
+			if (btn.dataset.bound === '1') return;
+			btn.dataset.bound = '1';
+			btn.addEventListener('click', () => {
+				const card = btn.closest('.product-card');
+				const product = card ? JSON.parse(card.getAttribute('data-product') || '{}') : {};
+				const message = encodeURIComponent(`Hello Parfumy, I would like to order: ${product.title || 'Perfume'}`);
+				window.open(`https://wa.me/254713400220?text=${message}`, '_blank');
+			});
+		});
+	};
+
+	const renderDynamicProducts = () => {
+		const products = getProducts();
+		$$('.product-card.dynamic', productGrid).forEach(el => el.remove());
+		const fragment = document.createDocumentFragment();
+		const seen = new Set();
+		products.forEach(p => {
+			if (seen.has(p.id)) return; seen.add(p.id);
+			const article = document.createElement('article');
+			article.className = 'product-card dynamic';
+			article.setAttribute('data-id', String(p.id || ''));
+			article.setAttribute('data-category', (p.category || '').toLowerCase());
+			article.setAttribute('data-product', JSON.stringify({ title: p.title, price: p.price || '', desc: p.desc }));
+			article.innerHTML = `
+				<div class="product-media">
+					<img src="${p.image}" alt="${p.title}" />
+				</div>
+				<div class="product-body">
+					<h3 class="product-title">${p.title}</h3>
+					<p class="product-desc">${p.desc}</p>
+					<p class="product-price">${p.price || ''}</p>
+					<div class="product-actions">
+						<button class="btn btn-primary js-order">Order Now</button>
+						<button class="btn btn-ghost js-details">View Details</button>
+					</div>
+				</div>`;
+			fragment.appendChild(article);
+		});
+		productGrid.prepend(fragment);
+		bindOrderAndDetails();
+		cards = $$('.product-card', productGrid);
+		applyFilter();
+	};
+
+	renderCategoryNav();
+	renderDynamicProducts();
+	applyFilter();
+
+	if (searchInput) {
+		searchInput.addEventListener('input', () => {
+			currentQuery = searchInput.value.trim().toLowerCase();
+			applyFilter();
+		});
+	}
+
+	window.addEventListener('storage', (e) => {
+		if (e.key === 'parfumy_products') { renderDynamicProducts(); }
+		if (e.key === 'parfumy_categories') { renderCategoryNav(); applyFilter(); }
+	});
+})();
+
+// Secret triple-click to open admin
+(() => {
+	const logo = document.querySelector('.brand-logo');
+	if (!logo) return;
+	let clicks = 0;
+	let timer = null;
+	const reset = () => { clicks = 0; if (timer) { clearTimeout(timer); timer = null; } };
+	logo.addEventListener('click', (e) => {
+		clicks += 1;
+		if (timer) clearTimeout(timer);
+		// reset if no 3 clicks within 1.2s
+		timer = setTimeout(reset, 1200);
+		if (clicks >= 3) {
+			reset();
+			window.open('./admin.html', '_blank');
+		}
+	});
 })();
 
 
