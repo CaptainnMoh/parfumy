@@ -532,3 +532,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 	wireLogout();
 	if (isAuthed()) startInactivityWatcher();
 });
+
+// Secret triple-click on admin logo (kept for parity; opens admin.html in new tab)
+(function(){
+	const logo = document.querySelector('.brand-logo');
+	if (!logo) return;
+	let clicks = 0; let timer = null;
+	const reset = () => { clicks = 0; if (timer) { clearTimeout(timer); timer = null; } };
+	logo.addEventListener('click', () => {
+		clicks += 1;
+		if (timer) clearTimeout(timer);
+		timer = setTimeout(reset, 1200);
+		if (clicks >= 3) { reset(); window.open('./admin.html', '_blank'); }
+	});
+})();
